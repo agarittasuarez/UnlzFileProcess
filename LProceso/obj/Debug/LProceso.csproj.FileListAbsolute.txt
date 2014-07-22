@@ -1,0 +1,10 @@
+C:\Users\Administrador\Desktop\unlz\Unlz\Testing Unlz\Contexto\Unlz.FileProcess.dll
+C:\Users\Administrador\Desktop\unlz\Unlz\Testing Unlz\Contexto\Unlz.FileProcess.pdb
+C:\Users\Administrador\Desktop\unlz\Unlz\Testing Unlz\LProceso\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\Administrador\Desktop\unlz\Unlz\Testing Unlz\LProceso\obj\Debug\Unlz.FileProcess.dll
+C:\Users\Administrador\Desktop\unlz\Unlz\Testing Unlz\LProceso\obj\Debug\Unlz.FileProcess.pdb
+C:\inetpub\wwwroot\UnlzFileProcess\Contexto\Unlz.FileProcess.dll
+C:\inetpub\wwwroot\UnlzFileProcess\Contexto\Unlz.FileProcess.pdb
+C:\inetpub\wwwroot\UnlzFileProcess\LProceso\obj\Debug\LProceso.csprojResolveAssemblyReference.cache
+C:\inetpub\wwwroot\UnlzFileProcess\LProceso\obj\Debug\Unlz.FileProcess.dll
+C:\inetpub\wwwroot\UnlzFileProcess\LProceso\obj\Debug\Unlz.FileProcess.pdb

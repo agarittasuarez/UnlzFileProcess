@@ -1,0 +1,13 @@
+C:\Users\Administrador\Desktop\unlz\Unlz\Testing Unlz\LProceso\bin\Release\Unlz.FileProcess.dll
+C:\Users\Administrador\Desktop\unlz\Unlz\Testing Unlz\LProceso\bin\Release\Unlz.FileProcess.pdb
+C:\Users\Administrador\Desktop\unlz\Unlz\Testing Unlz\LProceso\bin\Release\TNGS.NetRoutines.500.dll
+C:\Users\Administrador\Desktop\unlz\Unlz\Testing Unlz\LProceso\bin\Release\Unlz.IProceso.dll
+C:\Users\Administrador\Desktop\unlz\Unlz\Testing Unlz\LProceso\obj\Release\ResolveAssemblyReference.cache
+C:\Users\Administrador\Desktop\unlz\Unlz\Testing Unlz\LProceso\obj\Release\Unlz.FileProcess.dll
+C:\Users\Administrador\Desktop\unlz\Unlz\Testing Unlz\LProceso\obj\Release\Unlz.FileProcess.pdb
+C:\inetpub\wwwroot\UnlzFileProcess\LProceso\bin\Release\Unlz.FileProcess.dll
+C:\inetpub\wwwroot\UnlzFileProcess\LProceso\bin\Release\Unlz.FileProcess.pdb
+C:\inetpub\wwwroot\UnlzFileProcess\LProceso\bin\Release\TNGS.NetRoutines.500.dll
+C:\inetpub\wwwroot\UnlzFileProcess\LProceso\bin\Release\Unlz.IProceso.dll
+C:\inetpub\wwwroot\UnlzFileProcess\LProceso\obj\Release\Unlz.FileProcess.dll
+C:\inetpub\wwwroot\UnlzFileProcess\LProceso\obj\Release\Unlz.FileProcess.pdb
