@@ -149,8 +149,8 @@ namespace Unlz.FileProcess
                     cmd.Parameters.Add("@IdTipoInscripcion", SqlDbType.Char).Value = p_astrData[0];
                     cmd.Parameters.Add("@TurnoInscripcion", SqlDbType.Date).Value = p_astrData[1].Trim().Length > 0 ? Convert.ToDateTime(p_astrData[1]) : (DateTime)SqlDateTime.Null;
                     cmd.Parameters.Add("@IdVuelta", SqlDbType.Int).Value = Convert.ToInt32(p_astrData[2]);
-                    cmd.Parameters.Add("@InscripcionFechaDesde", SqlDbType.Date).Value = p_astrData[3].Trim().Length > 0 ? Convert.ToDateTime(p_astrData[3]) : (DateTime)SqlDateTime.Null;
-                    cmd.Parameters.Add("@InscripcionFechaHasta", SqlDbType.Date).Value = p_astrData[4].Trim().Length > 0 ? Convert.ToDateTime(p_astrData[4]) : (DateTime)SqlDateTime.Null;
+                    cmd.Parameters.Add("@InscripcionFechaDesde", SqlDbType.DateTime).Value = p_astrData[3].Trim().Length > 0 ? Convert.ToDateTime(p_astrData[3]) : (DateTime)SqlDateTime.Null;
+                    cmd.Parameters.Add("@InscripcionFechaHasta", SqlDbType.DateTime).Value = p_astrData[4].Trim().Length > 0 ? Convert.ToDateTime(p_astrData[4]) : (DateTime)SqlDateTime.Null;
                     
                     cmd.Transaction = this.spTransaction;
                     cmd.ExecuteNonQuery();
