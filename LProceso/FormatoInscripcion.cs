@@ -295,14 +295,16 @@ namespace Unlz.FileProcess
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.Add("@DNI", SqlDbType.Int).Value = dni;
                     cmd.Parameters.Add("@ApellidoNombre", SqlDbType.VarChar).Value = "Sin Datos";
-                    cmd.Parameters.Add("@IdSede", SqlDbType.Int).Value = null;
-                    cmd.Parameters.Add("@IdEstado", SqlDbType.Char).Value = null;
-                    cmd.Parameters.Add("@IdCarrera", SqlDbType.Int).Value = null;
-                    cmd.Parameters.Add("@CuatrimestreAnioIngreso", SqlDbType.VarChar).Value = null;
-                    cmd.Parameters.Add("@CuatrimestreAnioReincorporacion", SqlDbType.VarChar).Value = null;
-                    cmd.Parameters.Add("@IdCargo", SqlDbType.Int).Value =2;
+                    cmd.Parameters.Add("@IdSede", SqlDbType.Int).Value = -1;
+                    cmd.Parameters.Add("@IdEstado", SqlDbType.Char).Value = DBNull.Value;
+                    cmd.Parameters.Add("@IdCarrera", SqlDbType.Int).Value = DBNull.Value;
+                    cmd.Parameters.Add("@CuatrimestreAnioIngreso", SqlDbType.VarChar).Value = DBNull.Value;
+                    cmd.Parameters.Add("@CuatrimestreAnioReincorporacion", SqlDbType.VarChar).Value = DBNull.Value;
+                    cmd.Parameters.Add("@IdCargo", SqlDbType.Int).Value = 2;
 
+                    cmd.Transaction = this.spTransaction;
                     var result = cmd.ExecuteReader();
+                    result.Close();
                 }
             }
             catch (Exception l_expData)
@@ -324,13 +326,20 @@ namespace Unlz.FileProcess
                 {
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.Add("@DNI", SqlDbType.Int).Value = dni;
-
+                    
+                    cmd.Transaction = this.spTransaction;
                     var result = cmd.ExecuteReader();
 
                     if (result.HasRows)
+                    {
+                        result.Close();
                         return true;
+                    }
                     else
+                    {
+                        result.Close();
                         return false;
+                    }
                 }
             }
             catch (Exception l_expData)
