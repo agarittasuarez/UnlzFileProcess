@@ -257,9 +257,9 @@ namespace Unlz.FileProcess
                     cmd.Parameters.Add("@CatedraComision", SqlDbType.VarChar).Value = p_astrData[4];
                     cmd.Parameters.Add("@DNI", SqlDbType.Int).Value = Convert.ToInt32(p_astrData[5]);
                     cmd.Parameters.Add("@IdEstadoInscripcion", SqlDbType.Char).Value = p_astrData[6].Trim();
-                    cmd.Parameters.Add("@OrigenInscripcion", SqlDbType.Char).Value = ((Object)p_astrData[5].Trim() ?? DBNull.Value);
+                    cmd.Parameters.Add("@OrigenInscripcion", SqlDbType.Char).Value = ((Object)p_astrData[7].Trim() ?? DBNull.Value);
                     cmd.Parameters.Add("@FechaAltaInscripcion", SqlDbType.DateTime).Value = p_astrData[8].Trim().Length > 0 ? Convert.ToDateTime(p_astrData[8] + " " + p_astrData[9]) : (DateTime)SqlDateTime.Null;
-                    cmd.Parameters.Add("@OrigenModificacion", SqlDbType.Char).Value = ((Object)p_astrData[5].Trim() ?? DBNull.Value);
+                    cmd.Parameters.Add("@OrigenModificacion", SqlDbType.Char).Value = ((Object)p_astrData[10].Trim() ?? DBNull.Value);
                     cmd.Parameters.Add("@FechaModificacionInscripcion", SqlDbType.DateTime).Value = p_astrData[11].Trim().Length > 0 ? Convert.ToDateTime(p_astrData[11] + " " + p_astrData[12]) : (DateTime)SqlDateTime.Null;
                     cmd.Parameters.Add("@DNIEmpleadoAlta", SqlDbType.Int).Value = p_astrData[13].Trim().Length > 0 ? Convert.ToInt32(p_astrData[13]) : 0;
                     cmd.Parameters.Add("@DNIEmpleadoMod", SqlDbType.Int).Value = p_astrData[14].Trim().Length > 0 ? Convert.ToInt32(p_astrData[14]) : 0;
