@@ -18,7 +18,12 @@ namespace Unlz.FileProcess
         private SqlConnection bdConnection;
         private SqlTransaction spTransaction;
         private const String sp_ImportPadron = "UsuarioImportPadron";
+        private const String sp_DeactivateAccount = "UsuarioDeactivateAccount";
+        private const String sp_TransferData = "UsuarioTransferData";
         private const String IdTipoInscripcionPromocion = "P";
+        private const String IdMovimientoBaja = "B";
+        private const String IdMovimientoCambio = "C";
+        private bool changedAccount = false;
 
         #endregion
 
@@ -100,13 +105,22 @@ namespace Unlz.FileProcess
                     }
                 }
 
+                if (p_astrData[8].Trim().Length != 0)
+                {
+                    if (!double.TryParse(p_astrData[8], out numCheck))
+                    {
+                        p_smResult.BllError("El DNI debe ser del tipo int.");
+                        return;
+                    }
+                }
+
                 //VALIDA APELLIDONOMBRE
                 if (p_astrData[1].Trim().Length == 0)
                 {
                     p_smResult.BllError("El ApellidoNombre debe contener un valor.");
                     return;
                 }
-                
+
                 //VALIDA ID_SEDE
                 if (p_astrData[2].Trim().Length == 0)
                 {
@@ -128,7 +142,7 @@ namespace Unlz.FileProcess
                     p_smResult.BllError("El Id de Estado debe contener un valor.");
                     return;
                 }
-                
+
                 //VALIDA ID_CARRERA
                 if (p_astrData[4].Trim().Length == 0)
                 {
@@ -143,25 +157,58 @@ namespace Unlz.FileProcess
                         return;
                     }
                 }
+
+                if (p_astrData[8].Trim() != string.Empty)
+                {
+                    if (!double.TryParse(p_astrData[8], out numCheck))
+                    {
+                        p_smResult.BllError("El DNI debe ser del tipo int.");
+                        return;
+                    }
+                }
                 #endregion
 
-                using (SqlCommand cmd = new SqlCommand(sp_ImportPadron, this.bdConnection))
+                #region Delete Student && Deactivate account
+
+                if (p_astrData[7].Trim() != string.Empty)
                 {
-                    cmd.CommandType = CommandType.StoredProcedure;
-
-                    cmd.Parameters.AddWithValue("@DNI", Convert.ToInt32(p_astrData[0].Trim()));
-                    cmd.Parameters.AddWithValue("@ApellidoNombre", p_astrData[1].Trim().Replace('�', 'Ñ'));
-                    cmd.Parameters.AddWithValue("@IdSede", Convert.ToInt32(p_astrData[2]));
-                    cmd.Parameters.AddWithValue("@IdEstado", p_astrData[3].Trim());
-                    cmd.Parameters.AddWithValue("@IdCarrera", Convert.ToInt32(p_astrData[4].Trim()));
-                    cmd.Parameters.AddWithValue("@CuatrimestreAnioIngreso", ((Object)p_astrData[5].Trim() ?? DBNull.Value));
-                    cmd.Parameters.AddWithValue("@CuatrimestreAnioReincorporacion", ((Object)p_astrData[6].Trim() ?? DBNull.Value));
-                    cmd.Parameters.AddWithValue("@IdCargo", 2);
-
-                    cmd.Transaction = this.spTransaction;
-                    cmd.ExecuteNonQuery();
+                    switch(p_astrData[7].Trim().ToUpper())
+                    {
+                        case IdMovimientoBaja:
+                            DeactivateAccount(Convert.ToInt32(p_astrData[0]));
+                            changedAccount = true;
+                            break;
+                        case IdMovimientoCambio:
+                            if (p_astrData[8].Trim() != string.Empty)
+                                TransferData(Convert.ToInt32(p_astrData[0].Trim()), Convert.ToInt32(p_astrData[8].Trim()));
+                            changedAccount = true;
+                            break;
+                        default:
+                            break;
+                    }
                 }
 
+                #endregion
+
+                if (!changedAccount)
+                {
+                    using (SqlCommand cmd = new SqlCommand(sp_ImportPadron, this.bdConnection))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+
+                        cmd.Parameters.AddWithValue("@DNI", Convert.ToInt32(p_astrData[0].Trim()));
+                        cmd.Parameters.AddWithValue("@ApellidoNombre", p_astrData[1].Trim().Replace('�', 'Ñ'));
+                        cmd.Parameters.AddWithValue("@IdSede", Convert.ToInt32(p_astrData[2]));
+                        cmd.Parameters.AddWithValue("@IdEstado", p_astrData[3].Trim());
+                        cmd.Parameters.AddWithValue("@IdCarrera", Convert.ToInt32(p_astrData[4].Trim()));
+                        cmd.Parameters.AddWithValue("@CuatrimestreAnioIngreso", ((Object)p_astrData[5].Trim() ?? DBNull.Value));
+                        cmd.Parameters.AddWithValue("@CuatrimestreAnioReincorporacion", ((Object)p_astrData[6].Trim() ?? DBNull.Value));
+                        cmd.Parameters.AddWithValue("@IdCargo", 2);
+
+                        cmd.Transaction = this.spTransaction;
+                        cmd.ExecuteNonQuery();
+                    }
+                }
             }
             catch (Exception l_expData)
             {
@@ -172,6 +219,41 @@ namespace Unlz.FileProcess
             finally
             {
                 p_smResult.BllPop();
+            }
+        }
+
+        /// <summary>
+        /// Transfiere la información del DNI viejo al nuevo DNI del alumno, actualiza Padron de calificaciones e Inscripciones, para luego eliminar
+        /// el DNI viejo
+        /// </summary>
+        /// <param name="dniOld">DNI origen de la información a transferir</param>
+        /// <param name="dniNew">DNI a transferir la información</param>
+        private void TransferData(int dniOld, int dniNew)
+        {
+            using (SqlCommand cmd = new SqlCommand(sp_TransferData, this.bdConnection))
+            {
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@DNIOld", dniOld);
+                cmd.Parameters.AddWithValue("@DNINew", dniNew);
+
+                cmd.Transaction = this.spTransaction;
+                cmd.ExecuteNonQuery();
+            }
+        }
+
+        /// <summary>
+        /// Desactiva la cuenta del DNI seteado
+        /// </summary>
+        /// <param name="dni"></param>
+        private void DeactivateAccount(int dni)
+        {
+            using (SqlCommand cmd = new SqlCommand(sp_DeactivateAccount, this.bdConnection))
+            {
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@DNI", dni);
+
+                cmd.Transaction = this.spTransaction;
+                cmd.ExecuteNonQuery();
             }
         }
 
@@ -189,7 +271,8 @@ namespace Unlz.FileProcess
                 if (spTransaction != null)
                     spTransaction.Commit();
 
-                if (this.bdConnection != null) {
+                if (this.bdConnection != null)
+                {
                     this.bdConnection.Close();
                     this.bdConnection.Dispose();
                 }
@@ -218,12 +301,14 @@ namespace Unlz.FileProcess
                 if (spTransaction != null)
                     spTransaction.Rollback();
 
-                if (this.bdConnection != null) {
+                if (this.bdConnection != null)
+                {
                     this.bdConnection.Close();
                     this.bdConnection.Dispose();
                 }
             }
-            catch (Exception) {
+            catch (Exception)
+            {
             }
         }
     }
