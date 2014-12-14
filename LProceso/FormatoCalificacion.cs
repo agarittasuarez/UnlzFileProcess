@@ -207,13 +207,16 @@ namespace Unlz.FileProcess
                 //    p_smResult.BllError("El Folio debe contener un valor.");
                 //    return;
                 //}
+
+                ////VALIDA RESOLUCION
+                //if (p_astrData[13].Trim().Length == 0)
+                //{
+                //    p_smResult.BllError("La resolucion debe contener un valor.");
+                //    return;
+                //}
+
                 #endregion
-                //VALIDA RESOLUCION
-                if (p_astrData[13].Trim().Length == 0)
-                {
-                    p_smResult.BllError("La resolucion debe contener un valor.");
-                    return;
-                }
+
                 #endregion
 
                 using (SqlCommand cmd = new SqlCommand(sp_ImportNotas, this.bdConnection))
