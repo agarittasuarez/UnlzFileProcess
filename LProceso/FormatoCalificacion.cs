@@ -237,6 +237,7 @@ namespace Unlz.FileProcess
                     cmd.Parameters.Add("@Folio", SqlDbType.VarChar).Value = p_astrData[10];
                     cmd.Parameters.Add("@SubFolio", SqlDbType.VarChar).Value = p_astrData[11];
                     cmd.Parameters.Add("@Resolucion", SqlDbType.VarChar).Value = p_astrData[12];
+                    cmd.Parameters.Add("@CodigoMovimiento", SqlDbType.Char).Value = p_astrData[13];
 
                     cmd.Transaction = this.spTransaction;
                     cmd.ExecuteNonQuery();
