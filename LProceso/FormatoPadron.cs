@@ -23,6 +23,8 @@ namespace Unlz.FileProcess
         private const String IdTipoInscripcionPromocion = "P";
         private const String IdMovimientoBaja = "B";
         private const String IdMovimientoCambio = "C";
+        private const String NoValue = "N";
+        private const String SiValue = "S";
         private bool changedAccount = false;
 
         #endregion
@@ -170,17 +172,17 @@ namespace Unlz.FileProcess
 
                 #region Delete Student && Deactivate account
 
-                if (p_astrData[7].Trim() != string.Empty)
+                if (p_astrData[15].Trim() != string.Empty)
                 {
-                    switch(p_astrData[7].Trim().ToUpper())
+                    switch(p_astrData[15].Trim().ToUpper())
                     {
                         case IdMovimientoBaja:
                             DeactivateAccount(Convert.ToInt32(p_astrData[0]));
                             changedAccount = true;
                             break;
                         case IdMovimientoCambio:
-                            if (p_astrData[8].Trim() != string.Empty)
-                                TransferData(Convert.ToInt32(p_astrData[0].Trim()), Convert.ToInt32(p_astrData[8].Trim()));
+                            if (p_astrData[16].Trim() != string.Empty)
+                                TransferData(Convert.ToInt32(p_astrData[0].Trim()), Convert.ToInt32(p_astrData[16].Trim()));
                             changedAccount = true;
                             break;
                         default:
@@ -204,6 +206,29 @@ namespace Unlz.FileProcess
                         cmd.Parameters.AddWithValue("@CuatrimestreAnioIngreso", ((Object)p_astrData[5].Trim() ?? DBNull.Value));
                         cmd.Parameters.AddWithValue("@CuatrimestreAnioReincorporacion", ((Object)p_astrData[6].Trim() ?? DBNull.Value));
                         cmd.Parameters.AddWithValue("@IdCargo", 2);
+
+                        if (p_astrData[8].Trim().Length > 0)
+                        {
+                            cmd.Parameters.AddWithValue("@LimitacionRelevada", true);
+                            cmd.Parameters.AddWithValue("@Limitacion", p_astrData[8].Trim());
+                            cmd.Parameters.AddWithValue("@LimitacionVision", p_astrData[9].Trim());
+                            cmd.Parameters.AddWithValue("@LimitacionAudicion", p_astrData[10].Trim());
+                            cmd.Parameters.AddWithValue("@LimitacionMotriz", p_astrData[11].Trim());
+                            cmd.Parameters.AddWithValue("@LimitacionAgarre", p_astrData[12].Trim());
+                            cmd.Parameters.AddWithValue("@LimitacionHabla", p_astrData[13].Trim());
+                            cmd.Parameters.AddWithValue("@LimitacionOtra", p_astrData[14].Trim());
+                        }
+                        else
+                        {
+                            cmd.Parameters.AddWithValue("@LimitacionRelevada", false);
+                            cmd.Parameters.AddWithValue("@Limitacion", DBNull.Value);
+                            cmd.Parameters.AddWithValue("@LimitacionVision", DBNull.Value);
+                            cmd.Parameters.AddWithValue("@LimitacionAudicion", DBNull.Value);
+                            cmd.Parameters.AddWithValue("@LimitacionMotriz", DBNull.Value);
+                            cmd.Parameters.AddWithValue("@LimitacionAgarre", DBNull.Value);
+                            cmd.Parameters.AddWithValue("@LimitacionHabla", DBNull.Value);
+                            cmd.Parameters.AddWithValue("@LimitacionOtra", DBNull.Value); 
+                        }
 
                         cmd.Transaction = this.spTransaction;
                         cmd.ExecuteNonQuery();
