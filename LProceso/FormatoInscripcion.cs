@@ -293,22 +293,22 @@ namespace Unlz.FileProcess
                 using (SqlCommand cmd = new SqlCommand(sp_ImportPadron, this.bdConnection))
                 {
                     cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.Parameters.AddWithValue("@DNI", SqlDbType.Int).Value = dni;
-                    cmd.Parameters.AddWithValue("@ApellidoNombre", SqlDbType.VarChar).Value = "Sin Datos";
-                    cmd.Parameters.AddWithValue("@IdSede", SqlDbType.Int).Value = -1;
-                    cmd.Parameters.AddWithValue("@IdEstado", SqlDbType.Char).Value = DBNull.Value;
-                    cmd.Parameters.AddWithValue("@IdCarrera", SqlDbType.Int).Value = DBNull.Value;
-                    cmd.Parameters.AddWithValue("@CuatrimestreAnioIngreso", SqlDbType.VarChar).Value = DBNull.Value;
-                    cmd.Parameters.AddWithValue("@CuatrimestreAnioReincorporacion", SqlDbType.VarChar).Value = DBNull.Value;
-                    cmd.Parameters.AddWithValue("@IdCargo", SqlDbType.Int).Value = 2;
+                    cmd.Parameters.AddWithValue("@DNI", dni);
+                    cmd.Parameters.AddWithValue("@ApellidoNombre", "Sin Datos");
+                    cmd.Parameters.AddWithValue("@IdSede", -1);
+                    cmd.Parameters.AddWithValue("@IdEstado", DBNull.Value);
+                    cmd.Parameters.AddWithValue("@IdCarrera", DBNull.Value);
+                    cmd.Parameters.AddWithValue("@CuatrimestreAnioIngreso", DBNull.Value);
+                    cmd.Parameters.AddWithValue("@CuatrimestreAnioReincorporacion", DBNull.Value);
+                    cmd.Parameters.AddWithValue("@IdCargo", 2);
                     cmd.Parameters.AddWithValue("@LimitacionRelevada", false);
                     cmd.Parameters.AddWithValue("@Limitacion", DBNull.Value);
                     cmd.Parameters.AddWithValue("@LimitacionVision", DBNull.Value);
-                    cmd.Parameters.AddWithValue("@LimitacionAudicion", DBNull.Value);
                     cmd.Parameters.AddWithValue("@LimitacionMotriz", DBNull.Value);
+                    cmd.Parameters.AddWithValue("@LimitacionAudicion", DBNull.Value);                    
                     cmd.Parameters.AddWithValue("@LimitacionAgarre", DBNull.Value);
                     cmd.Parameters.AddWithValue("@LimitacionHabla", DBNull.Value);
-                    cmd.Parameters.AddWithValue("@LimitacionOtra", DBNull.Value); 
+                    cmd.Parameters.AddWithValue("@LimitacionOtra", DBNull.Value);
 
                     cmd.Transaction = this.spTransaction;
                     var result = cmd.ExecuteReader();

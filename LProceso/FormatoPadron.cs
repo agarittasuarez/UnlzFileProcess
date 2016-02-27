@@ -107,9 +107,9 @@ namespace Unlz.FileProcess
                     }
                 }
 
-                if (p_astrData[8].Trim().Length != 0)
+                if (p_astrData[16].Trim().Length != 0)
                 {
-                    if (!double.TryParse(p_astrData[8], out numCheck))
+                    if (!double.TryParse(p_astrData[16], out numCheck))
                     {
                         p_smResult.BllError("El DNI debe ser del tipo int.");
                         return;
@@ -160,14 +160,6 @@ namespace Unlz.FileProcess
                     }
                 }
 
-                if (p_astrData[8].Trim() != string.Empty)
-                {
-                    if (!double.TryParse(p_astrData[8], out numCheck))
-                    {
-                        p_smResult.BllError("El DNI debe ser del tipo int.");
-                        return;
-                    }
-                }
                 #endregion
 
                 #region Delete Student && Deactivate account
@@ -212,21 +204,27 @@ namespace Unlz.FileProcess
                             cmd.Parameters.AddWithValue("@LimitacionRelevada", true);
                             cmd.Parameters.AddWithValue("@Limitacion", p_astrData[8].Trim());
                             cmd.Parameters.AddWithValue("@LimitacionVision", p_astrData[9].Trim());
-                            cmd.Parameters.AddWithValue("@LimitacionAudicion", p_astrData[10].Trim());
-                            cmd.Parameters.AddWithValue("@LimitacionMotriz", p_astrData[11].Trim());
-                            cmd.Parameters.AddWithValue("@LimitacionAgarre", p_astrData[12].Trim());
-                            cmd.Parameters.AddWithValue("@LimitacionHabla", p_astrData[13].Trim());
-                            cmd.Parameters.AddWithValue("@LimitacionOtra", p_astrData[14].Trim());
+                            cmd.Parameters.AddWithValue("@Lentes", p_astrData[10].Trim());
+                            cmd.Parameters.AddWithValue("@LimitacionAudicion", p_astrData[11].Trim());
+                            cmd.Parameters.AddWithValue("@Audifonos", p_astrData[12].Trim());
+                            cmd.Parameters.AddWithValue("@LimitacionMotriz", p_astrData[13].Trim());                            
+                            cmd.Parameters.AddWithValue("@LimitacionAgarre", p_astrData[14].Trim());
+                            cmd.Parameters.AddWithValue("@LimitacionHabla", p_astrData[15].Trim());
+                            cmd.Parameters.AddWithValue("@Dislexia", p_astrData[16].Trim());
+                            cmd.Parameters.AddWithValue("@LimitacionOtra", p_astrData[17].Trim());
                         }
                         else
                         {
                             cmd.Parameters.AddWithValue("@LimitacionRelevada", false);
                             cmd.Parameters.AddWithValue("@Limitacion", DBNull.Value);
                             cmd.Parameters.AddWithValue("@LimitacionVision", DBNull.Value);
-                            cmd.Parameters.AddWithValue("@LimitacionAudicion", DBNull.Value);
+                            cmd.Parameters.AddWithValue("@Lentes", DBNull.Value);
                             cmd.Parameters.AddWithValue("@LimitacionMotriz", DBNull.Value);
+                            cmd.Parameters.AddWithValue("@LimitacionAudicion", DBNull.Value);
+                            cmd.Parameters.AddWithValue("@Audifonos", DBNull.Value);
                             cmd.Parameters.AddWithValue("@LimitacionAgarre", DBNull.Value);
                             cmd.Parameters.AddWithValue("@LimitacionHabla", DBNull.Value);
+                            cmd.Parameters.AddWithValue("@Dislexia", DBNull.Value);
                             cmd.Parameters.AddWithValue("@LimitacionOtra", DBNull.Value); 
                         }
 
