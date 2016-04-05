@@ -309,6 +309,9 @@ namespace Unlz.FileProcess
                     cmd.Parameters.AddWithValue("@LimitacionAgarre", DBNull.Value);
                     cmd.Parameters.AddWithValue("@LimitacionHabla", DBNull.Value);
                     cmd.Parameters.AddWithValue("@LimitacionOtra", DBNull.Value);
+                    cmd.Parameters.AddWithValue("@Lentes", DBNull.Value);
+                    cmd.Parameters.AddWithValue("@Audifonos", DBNull.Value);
+                    cmd.Parameters.AddWithValue("@Dislexia", DBNull.Value);
 
                     cmd.Transaction = this.spTransaction;
                     var result = cmd.ExecuteReader();

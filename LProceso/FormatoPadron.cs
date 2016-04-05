@@ -102,16 +102,16 @@ namespace Unlz.FileProcess
                 {
                     if (!double.TryParse(p_astrData[0], out numCheck))
                     {
-                        p_smResult.BllError("El DNI debe ser del tipo int.");
+                        p_smResult.BllError(String.Format("El DNI {0} debe ser del tipo int.", p_astrData[0]));
                         return;
                     }
                 }
 
-                if (p_astrData[16].Trim().Length != 0)
+                if (p_astrData[19].Trim().Length != 0)
                 {
                     if (!double.TryParse(p_astrData[16], out numCheck))
                     {
-                        p_smResult.BllError("El DNI debe ser del tipo int.");
+                        p_smResult.BllError(String.Format("El DNI {0} debe ser del tipo int.", p_astrData[0]));
                         return;
                     }
                 }
@@ -164,9 +164,9 @@ namespace Unlz.FileProcess
 
                 #region Delete Student && Deactivate account
 
-                if (p_astrData[15].Trim() != string.Empty)
+                if (p_astrData[18].Trim() != string.Empty)
                 {
-                    switch(p_astrData[15].Trim().ToUpper())
+                    switch(p_astrData[18].Trim().ToUpper())
                     {
                         case IdMovimientoBaja:
                             DeactivateAccount(Convert.ToInt32(p_astrData[0]));
@@ -174,7 +174,7 @@ namespace Unlz.FileProcess
                             break;
                         case IdMovimientoCambio:
                             if (p_astrData[16].Trim() != string.Empty)
-                                TransferData(Convert.ToInt32(p_astrData[0].Trim()), Convert.ToInt32(p_astrData[16].Trim()));
+                                TransferData(Convert.ToInt32(p_astrData[0].Trim()), Convert.ToInt32(p_astrData[19].Trim()));
                             changedAccount = true;
                             break;
                         default:
