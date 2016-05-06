@@ -173,7 +173,7 @@ namespace Unlz.FileProcess
                             changedAccount = true;
                             break;
                         case IdMovimientoCambio:
-                            if (p_astrData[16].Trim() != string.Empty)
+                            if (p_astrData[19].Trim() != string.Empty)
                                 TransferData(Convert.ToInt32(p_astrData[0].Trim()), Convert.ToInt32(p_astrData[19].Trim()));
                             changedAccount = true;
                             break;
