@@ -109,7 +109,7 @@ namespace Unlz.FileProcess
 
                 if (p_astrData[19].Trim().Length != 0)
                 {
-                    if (!double.TryParse(p_astrData[16], out numCheck))
+                    if (!double.TryParse(p_astrData[19], out numCheck))
                     {
                         p_smResult.BllError(String.Format("El DNI {0} debe ser del tipo int.", p_astrData[0]));
                         return;
