@@ -122,6 +122,21 @@ namespace Unlz.FileProcess
                     }
                 }
 
+                //VALIDA ID_sede
+                if (p_astrData[5].Trim().Length == 0)
+                {
+                    p_smResult.BllError("La Sede debe contener un valor.");
+                    return;
+                }
+                else
+                {
+                    if (!double.TryParse(p_astrData[5], out numCheck))
+                    {
+                        p_smResult.BllError("La Sede debe ser del tipo int.");
+                        return;
+                    }
+                }
+
                 //VALIDA FECHAS
                 if (p_astrData[3].Trim().Length > 0)
                 {
@@ -151,7 +166,8 @@ namespace Unlz.FileProcess
                     cmd.Parameters.Add("@IdVuelta", SqlDbType.Int).Value = Convert.ToInt32(p_astrData[2]);
                     cmd.Parameters.Add("@InscripcionFechaDesde", SqlDbType.DateTime).Value = p_astrData[3].Trim().Length > 0 ? Convert.ToDateTime(p_astrData[3]) : (DateTime)SqlDateTime.Null;
                     cmd.Parameters.Add("@InscripcionFechaHasta", SqlDbType.DateTime).Value = p_astrData[4].Trim().Length > 0 ? Convert.ToDateTime(p_astrData[4]) : (DateTime)SqlDateTime.Null;
-                    
+                    cmd.Parameters.Add("@IdSede", SqlDbType.Int).Value = Convert.ToInt32(p_astrData[5]);
+
                     cmd.Transaction = this.spTransaction;
                     cmd.ExecuteNonQuery();
                 }
